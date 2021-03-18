@@ -90,9 +90,18 @@ async def unban(ctx,*,member):
             return
     await ctx.send(member+ " was not found")
 @client.command()
-async def hamza(ctx):
-    await ctx.send("bobux2")
-
+@commands.has_permissions(kick_members=True)
+async def mute (ctx,member:discord.Member):
+    muted=ctx.guild.get_role(821972019176144977)
+    await member.add_roles(muted)
+    await ctx.send(member.mention +" Has Been Muted")
+    await ctx.channel.purge(limit=1)
+@client.command()
+@commands.has_permissions(kick_members=True)
+async def unmute(ctx, member:discord.Member):
+    muted = ctx.guild.get_role(821972019176144977)
+    await member.remove_roles(muted)
+    await ctx.send(member.mention +"Has Been Unmuted")
 
 
 
