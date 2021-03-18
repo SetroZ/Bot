@@ -91,7 +91,7 @@ async def unban(ctx,*,member):
     await ctx.send(member+ " was not found")
 @client.commands
 async def hamza(ctx):
-    await ctx.send("bobux")
+    await ctx.send("bobux2")
 
 
 
