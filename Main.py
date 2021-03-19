@@ -23,9 +23,19 @@ async def on_ready():
 
 
 @client.event
-async def on_messsage(message):
-    if message.author.id == 817426689847590942:
-        await message.channel.purge(limit=1)
+async def on_command_error(ctx,error):
+    if isinstance(error,commands.MissingPermissions):
+        await ctx.send("You don't have permission")
+        await ctx.message.delete()
+    elif  isinstance(error,commands.MissingRequiredArgument):
+        await ctx.send("Please provide all required arguments")
+        await ctx.message.delete()
+    elif isinstance(error,commands.MemberNotFound):
+        await ctx.send("Member wasn't found")
+        await ctx.message.delete()
+    else:
+        raise error
+
 
 
 @client.command()
