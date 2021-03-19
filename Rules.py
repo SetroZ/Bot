@@ -1,3 +1,6 @@
+from discord.ext import commands
+import discord
+
 R=[
 """1. Be respectful
 You must respect all users, regardless of your liking towards them. Treat others the way you want to be treated.""",
@@ -40,7 +43,7 @@ Your presence in this server implies accepting these rules, including all furthe
 
 
 
-Rules="""```f
+Rules="""
 Rules For Community
 1. Be respectful
 You must respect all users, regardless of your liking towards them. Treat others the way you want to be treated.
@@ -76,6 +79,6 @@ The Admins and Mods will Mute/Kick/Ban per discretion. If you feel mistreated dm
 
 All Channels will have pinned messages explaining what they are there for and how everything works. If you don't understand something, feel free to ask!
 
-Your presence in this server implies accepting these rules, including all further changes. These changes might be done at any time without notice, it is your responsibility to check for them.```"""
+Your presence in this server implies accepting these rules, including all further changes. These changes might be done at any time without notice, it is your responsibility to check for them."""
 
 b="https://tenor.com/view/ban-hammer-super-mario-gif-17553259"

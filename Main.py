@@ -1,13 +1,11 @@
 from Rules import *
 
 from discord.ext import commands
-import discord
+from discord import *
 import requests
 import json
 
-
 client = commands.Bot(command_prefix=".")
-
 
 
 def get_quote():
@@ -23,19 +21,18 @@ async def on_ready():
 
 
 @client.event
-async def on_command_error(ctx,error):
-    if isinstance(error,commands.MissingPermissions):
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
         await ctx.send("You don't have permission")
         await ctx.message.delete()
-    elif  isinstance(error,commands.MissingRequiredArgument):
+    elif isinstance(error, commands.MissingRequiredArgument):
         await ctx.send("Please provide all required arguments")
         await ctx.message.delete()
-    elif isinstance(error,commands.MemberNotFound):
+    elif isinstance(error, commands.MemberNotFound):
         await ctx.send("Member wasn't found")
         await ctx.message.delete()
     else:
         raise error
-
 
 
 @client.command()
@@ -51,7 +48,9 @@ async def Hello(ctx):
 
 @client.command()
 async def rules(ctx):
-    await ctx.send(Rules)
+    em = discord.Embed(title="Rules", description=Rules,color=Color.red())
+    await ctx.send(embed=em)
+
 
 
 @client.command()
@@ -110,7 +109,10 @@ async def unban(ctx, *, member):
             return
     await ctx.send(member + " was not found")
 
-mute_role=False
+
+mute_role = False
+
+
 @client.command()
 @commands.has_permissions(kick_members=True)
 async def mute(ctx, member: discord.Member):
@@ -121,7 +123,7 @@ async def mute(ctx, member: discord.Member):
     if mute_role == True:
         await ctx.send(member.mention + "Is already muted")
     else:
-        mute_role=True
+        mute_role = True
         await ctx.send(member.mention + "Has Been Muted")
 
 
@@ -134,9 +136,8 @@ async def unmute(ctx, member: discord.Member):
     if mute_role == False:
         await ctx.send(member.mention + " Is already unmuted")
     else:
-        mute_role=False
+        mute_role = False
         await ctx.send(member.mention + "Has been unmuted ")
-
 
 
 client.run("ODE3NDI2Njg5ODQ3NTkwOTQy.YEJV7Q.ipacP1z1hOny_-_APRNA0kHaRKg")
