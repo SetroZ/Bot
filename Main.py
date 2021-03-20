@@ -23,10 +23,13 @@ async def on_ready():
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
-        await ctx.send("You don't have permission")
+        await ctx.send(
+            embed=discord.Embed(title="permission", description="You don't have permission", color=Color.red()))
         await ctx.message.delete()
     elif isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Please provide all required arguments")
+        await ctx.send(
+            embed=discord.Embed(title="Argument Missing", description="Please provide all required arguments",
+                                color=Color.red()))
         await ctx.message.delete()
     elif isinstance(error, commands.MemberNotFound):
         await ctx.send(embed=discord.Embed(title="Not Found", description="User was not found", color=Color.red()))
@@ -62,12 +65,11 @@ async def rule(ctx, *, number):
 @commands.has_permissions(manage_messages=True)
 async def clear(ctx, amount=2):
     await ctx.channel.purge(limit=amount)
-    await ctx.send(f"Deleted {amount} messages")
 
 
 @client.command()
 @commands.has_permissions(manage_messages=True)
-async def clear_all(ctx, amount=99999999):
+async def clearall(ctx, amount=99999999):
     await ctx.channel.purge(limit=amount)
 
 
