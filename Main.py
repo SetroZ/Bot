@@ -29,7 +29,7 @@ async def on_command_error(ctx, error):
         await ctx.send("Please provide all required arguments")
         await ctx.message.delete()
     elif isinstance(error, commands.MemberNotFound):
-        await ctx.send("Member wasn't found")
+        await ctx.send(embed=discord.Embed(title="Not Found", description="User was not found", color=Color.red()))
         await ctx.message.delete()
     else:
         raise error
@@ -48,20 +48,14 @@ async def Hello(ctx):
 
 @client.command()
 async def rules(ctx):
-    em = discord.Embed(title="Rules", description=Rules,color=Color.red())
+    em = discord.Embed(title="Rules", description=Rules, color=Color.red())
     await ctx.send(embed=em)
-
-
-
-@client.command()
-async def send(ctx):
-    msg = await ctx.send(".rule")
-    await msg.delete()
 
 
 @client.command()
 async def rule(ctx, *, number):
-    await ctx.send(R[int(number) - 1])
+    em = discord.Embed(title="Rules", description=R[int(number) - 1], color=Color.blue())
+    await ctx.send(embed=em)
 
 
 @client.command()
@@ -82,6 +76,8 @@ async def clear_all(ctx, amount=99999999):
 async def kick(ctx, member: discord.Member, *, reason="No reason provided"):
     await member.send(f"You have been Kicked , Because {reason}")
     await member.kick(reason=reason)
+    em = discord.Embed(title="Kicked", description=member + " Has been Kicked!", color=Color.red())
+    await ctx.send(embed=em)
 
 
 @client.command()
@@ -92,7 +88,9 @@ async def ban(ctx, member: discord.Member, *, reason="No reason provided"):
     except:
         print("")
     finally:
-        await ctx.send(f"{member} has been banned \n {b}")
+        em = discord.Embed(title="Banned", description=f"{member} has been banned \n ", color=Color.red())
+        await ctx.send(embed=em)
+        await ctx.send(b)
         await member.ban(reason=reason)
 
 
@@ -105,9 +103,10 @@ async def unban(ctx, *, member):
         user = banned_entry.user
         if (user.name, user.discriminator) == (member_name, member_disc):
             await ctx.guild.unban(user)
-            await ctx.send(member_name + " has been unbanned!")
+            em = discord.Embed(title="Unbanned", description=member_name + " Has been unbanned!", color=Color.red())
+            await ctx.send(embed=em)
             return
-    await ctx.send(member + " was not found")
+    await ctx.send(embed=discord.Embed(title="Not Found", description=member + " was not found", color=Color.red()))
 
 
 mute_role = False
@@ -121,10 +120,12 @@ async def mute(ctx, member: discord.Member):
     global mute_role
 
     if mute_role == True:
-        await ctx.send(member.mention + "Is already muted")
+        em = discord.Embed(title="Mutes", description=member.mention + " Is already muted", color=Color.green())
+        await ctx.send(embed=em)
     else:
         mute_role = True
-        await ctx.send(member.mention + "Has Been Muted")
+        em = discord.Embed(title="Mutes", description=member.mention + " Has Been Muted", color=Color.green())
+        await ctx.send(embed=em)
 
 
 @client.command()
@@ -134,10 +135,12 @@ async def unmute(ctx, member: discord.Member):
     await member.remove_roles(muted)
     global mute_role
     if mute_role == False:
-        await ctx.send(member.mention + " Is already unmuted")
+        em = discord.Embed(title="Mutes", description=member.mention + " Is already unmuted", color=Color.green())
+        await ctx.send(embed=em)
     else:
         mute_role = False
-        await ctx.send(member.mention + "Has been unmuted ")
+        em = discord.Embed(title="Mutes", description=member.mention + " Has been unmuted", color=Color.green())
+        await ctx.send(embed=em)
 
 
 client.run("ODE3NDI2Njg5ODQ3NTkwOTQy.YEJV7Q.ipacP1z1hOny_-_APRNA0kHaRKg")
